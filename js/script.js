@@ -6,7 +6,7 @@ const nubesForeground = document.getElementById('nubes-foreground');
 // --- 1. GENERADOR DE NUBES 3D (PARALLAX + FLOTAR) ---
 function crearNubes(container, cantidad, esFrontal) {
     for (let i = 0; i < cantidad; i++) {
-        // Envoltorio para el Mouse (Parallax)
+    
         const wrapper = document.createElement('div');
         wrapper.className = 'nube-wrapper';
         wrapper.style.left = Math.random() * 110 - 5 + '%';
@@ -21,18 +21,15 @@ function crearNubes(container, cantidad, esFrontal) {
         const profundidad = esFrontal ? (Math.random() * 1.5 + 2) : (Math.random() * 2 + 0.5);
         const escalaBase = esFrontal ? 0.3 : 0.6;
         
-        // El tamaño se aplica al wrapper
         wrapper.style.transform = `scale(${profundidad * escalaBase})`;
 
         wrapper.appendChild(nube);
         container.appendChild(wrapper);
         
-        // Guardar para el efecto Parallax
         nubesArray.push({ 
             el: wrapper, 
             depth: profundidad, 
             scale: escalaBase,
-            // Las nubes de atrás van en contra del mouse, las de adelante a favor (Efecto 3D)
             direccion: esFrontal ? 1 : -1 
         });
     }
@@ -63,7 +60,7 @@ document.addEventListener('mousemove', (e) => {
     
         const umbralTxt = 250; 
         if (distTxt < umbralTxt) {
-            // Factor máximo de 0.05 (crece un 5%). Si quieres que crezca más, súbelo a 0.08 o 0.1
+        
             const factorTxt = 1 + (0.05 * (1 - (distTxt / umbralTxt))); 
             txt.style.transform = `scale(${factorTxt})`;
         } else {
@@ -74,12 +71,9 @@ document.addEventListener('mousemove', (e) => {
      // B) EFECTO PARALLAX EN EL TEXTO (HERO) - Sutil y 3D
     const hero = document.querySelector('.hero');
     if (hero) {
-        // 1. Traslación muy sutil (solo 10 píxeles máximo)
         const heroX = movX * -5; 
         const heroY = movY * -5;
         
-        // 2. Rotación 3D (Se inclina máximo 4 grados)
-        // Invertimos los valores para que parezca que mira hacia el mouse
         const rotX = movY * 2; 
         const rotY = movX * -1.5; 
         
@@ -89,12 +83,10 @@ document.addEventListener('mousemove', (e) => {
 // D) EFECTO PARALLAX SUTIL EN LA SILUETA (CARA NEGRA)
     const caraWrapper = document.querySelector('.cara-wrapper');
     if (caraWrapper) {
-        // Movimiento casi imperceptible: máximo 4 píxeles
-        const caraX = movX * 0; // Se mueve ligeramente en dirección opuesta al mouse
+    
+        const caraX = movX * 0;
         const caraY = movY * -5;
-        
-        // El scale(1.02) es el truco mágico: la hace un pelín más grande para que 
-        // al moverse esos 4 píxeles, jamás se revele el fondo azul en el borde derecho.
+   
         caraWrapper.style.transform = `translate(${caraX}px, ${caraY}px) scale(1.02)`;
     }
 
@@ -123,7 +115,6 @@ document.addEventListener('mousemove', (e) => {
         pupila.style.transform = `translate(calc(-50% + ${moverX}px), calc(-50% + ${moverY}px)) scale(${escala})`;
     }
 
-    // C) ATRACCIÓN BOTONES SOCIALES (Imán)
     const botones = document.querySelectorAll('.social-btn');
     botones.forEach(btn => {
         const bRect = btn.getBoundingClientRect();
@@ -136,7 +127,7 @@ document.addEventListener('mousemove', (e) => {
             const factor = 1 + (0.3 * (1 - (distBtn / umbral))); 
             btn.style.transform = `scale(${factor})`;
         } else {
-            // Solo reinicia si el botón no está recibiendo un susurro
+            
             if(!btn.classList.contains('susurrado')) {
                 btn.style.transform = `scale(1)`;
             }
@@ -152,7 +143,7 @@ function cerebroDelOjo() {
     parpado.classList.add('cerrado');
     setTimeout(() => {
         parpado.classList.remove('cerrado');
-        if (Math.random() > 0.8) { // Pestañeo doble
+        if (Math.random() > 0.8) { 
             setTimeout(() => {
                 parpado.classList.add('cerrado');
                 setTimeout(() => parpado.classList.remove('cerrado'), 150);
@@ -164,12 +155,11 @@ function cerebroDelOjo() {
 cerebroDelOjo();
 
 
-// --- 4. GENERADOR DE NUBES DEL SUSURRO SINCRONIZADO ---
 function crearNubeSusurro() {
     const caraWrapper = document.querySelector('.cara-wrapper');
     if (!caraWrapper) return;
     
-    // Coordenadas aproximadas de la boca
+    // Coordenadas de la boca
     const caraRect = caraWrapper.getBoundingClientRect();
     const bocaX = caraRect.left + (caraRect.width * 0.15); 
     const bocaY = caraRect.top + (caraRect.height * 0.70);
@@ -198,11 +188,11 @@ function crearNubeSusurro() {
 
     const tiempoAnimacion = Math.random() * 1500 + 2000;
 
-    // Calcular arco del viaje
+  
     const midX = bocaX - ((bocaX - destinoX) / 2);
     const midY = Math.min(bocaY, destinoY) - 80;
 
-    // FASE 1: El Viaje
+
     const animacionViaje = nube.animate([
         { transform: `translate(-50%, -50%) scale(0)`, opacity: 0, offset: 0 },
         { transform: `translate(calc(-50% + ${midX - bocaX}px), calc(-50% + ${midY - bocaY}px)) scale(1)`, opacity: 0.8, offset: 0.5 },
@@ -213,7 +203,7 @@ function crearNubeSusurro() {
         fill: 'forwards'
     });
 
-    // FASE 2: El Impacto (Gatillo exacto)
+   
     animacionViaje.onfinish = () => {
         
         targetBtn.classList.add('susurrado');
@@ -232,5 +222,4 @@ function crearNubeSusurro() {
     };
 }
 
-// Dispara una nube de susurro cada 1.5 segundos
 setInterval(crearNubeSusurro, 1500);
