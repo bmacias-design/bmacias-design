@@ -1,34 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>M-CORBII | Código y Animación</title>
+    
     <link rel="stylesheet" href="https://use.typekit.net/grb4puo.css">
+   
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
+<div id="contenedor-nubes">
+    
+    <div class="nube tipo-1" data-depth="0.2" style="top: 10%; left: 15%;"></div>
+    
+    <div class="nube tipo-2" data-depth="0.8" style="top: 40%; left: 70%;"></div>
+    
+    <div class="nube tipo-3" data-depth="1.5" style="top: 75%; left: 20%;"></div>
   <div class="escenario">
+    <div id="nubes-container" class="nubes-parallax"></div>
+    <div id="nubes-foreground" class="nubes-parallax" style="z-index: 100;"></div>
     <main>
       <section class="hero">
         <header class="hero-content">
           <h1>M-CORBII</h1>
         </header>
         <p>
-          Aprendiendo <strong>código creativo y animación 2D</strong>. Me encanta la idea de crear experiencias visuales dinámicas, actualmente hago pinturas y sketch en hoja, aunque soy nueva y aún estoy en proceso, aquí comparto mis primeros pasos, experimentos y proyectos mientras construyo el camino hacia dominar el arte del movimiento digital. 
-          </p>
-          <p>Si tú también estás aprendiendo o simplemente sientes curiosidad por este mundo, escríbeme!
+           <strong>Código creativo y animación 2D</strong>. En camino hacia dominar el arte del movimiento digital. 
         </p>
+        <p>Si tú también estás aprendiendo o simplemente sientes curiosidad por este mundo, escríbeme!</p>
+        
         <a href="https://www.instagram.com/__danxju/" target="_blank" class="btn">Instagram</a>
-        <a href="https://www.youtube.com/feed/you" target="_blank" class="btn">Youtube</a>
+        <a href="#" target="_blank" class="btn">Youtube</a>
         <a href="https://open.spotify.com/user/r0zw1sqkyilprmu0eafir44qz" target="_blank" class="btn">Spotify</a>
       </section>
-    </main>
-    <!--
-    <div class="ojo-sobre-cara">
-      <img src="../img/ojo-contorno.png" alt="Ojo contorno" class="ojo-contorno">
+    </main> 
+
+    <div class="caras-container">
+      
+      <div class="cara-wrapper">
+        
+     
+        <img src="./img/carae.svg" alt="Cara E" class="cara cara-e">
+         <div id="whisper-container"></div>
+        <div class="ojo-contenedor" id="ojo-contenedor">
+          <img src="./img/contornu.svg" alt="Contorno" class="ojo-contorno">
+          <img src="./img/pupilu.svg" alt="Pupila" class="ojo-pupila" id="pupila">
+          <div class="parpado" id="parpado"></div>
+        </div>
+        
+      </div>
+      
     </div>
-    -->
-  </div>
+
+</div>
+
+  <script src="./js/script.js"></script>
 </body>
 </html>

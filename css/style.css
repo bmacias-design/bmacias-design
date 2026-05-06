@@ -21,12 +21,12 @@ body {
     font-family: "shantell-sans-normal", sans-serif;
     background-color: #5075c9;
     color: #000000;
-    background-image: url(../img/buebo.png);
     background-repeat: no-repeat;
     background-position: right top;
     background-size: contain;
     background-attachment: fixed;
     margin: 0;
+    overflow-x: hidden;
     background-position: right;
 }
 
@@ -36,12 +36,17 @@ body {
     background-color: #fff;
     color: #000;
     text-decoration: none;
-    border-radius: 30px;
+    border-radius: 20px;
     font-family: "Jetsy", sans-serif;
     font-weight: bold;
     margin: 0 5px 10px 0;
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.3s, color 0.3s, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* El secreto de la fluidez */
+    transform-origin: center;
+    position: relative;
+    z-index: 10;
+    opacity: 0.80;
 }
+
 .btn:hover {
     background-color: #000;
     color: #fff;
@@ -52,32 +57,51 @@ main {
     max-width: 700px;
     margin: 0 auto;
     padding: 2em 1em;
+    position: relative;
+    z-index: 2;
 }
 
 @media (min-width: 1024px) {
     main {
-        margin-left: 10%;
+        width: 45%;
+        max-width: 660px;
+        margin-left: 8%;
         margin-right: auto;
+        padding-right: 1.5rem;
+    }
+}
+
+@media (max-width: 1024px) and (min-width: 701px) {
+    .caras-container {
+        width: 38vw;
+        min-width: 280px;
+        max-width: 480px;
+    }
+
+    main {
+        width: 52%;
     }
 }
 
 h1, h2, h3 {
     font-family: "Jetsy", sans-serif;
-    color: #ffffff;
+    color: #000000;
     margin-top: 0;
 }
 
 h1 {
-    font-size: 6rem;
+    font-size: 7rem;      
+    letter-spacing: 0.06rem; 
+    margin-left: 20px;      
 }
 
 p {
-    font-size: 1.1rem;
-    line-height: 1.6;
+    font-size: 1.2em;
+    line-height: 1.5;
     margin-bottom: 1.5em;
-    color: #2c2c2c;
+    color: #000000;
     max-width: 65ch;
-    text-shadow: 0px 0px 0px #fffaf07d;
+    text-shadow: 0px 0px 0px #4040407d;
 }
 
 * {
@@ -85,45 +109,90 @@ p {
     scroll-behavior: smooth;
 }
 
-
 .escenario {
     position: relative;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
+    display: flex;
+    align-items: center;
 }
 
-.ojo-seguimiento {
+.caras-container {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 42vw;
+    min-width: 320px;
+    max-width: 560px;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; 
+    padding: 0;
+    overflow: visible;
+    z-index: 1;
+}
+
+.cara-wrapper {
+    position: relative;
+    display: inline-block;
+    height: 100%; 
+    flex-shrink: 0;
+}
+
+.cara-e {
+    height: 100%;
+    width: auto;
+    max-width: none;
+    display: block;
+    margin-right: 0;
+}
+
+
+.ojo-contenedor {
     position: absolute;
-    left: 77%;
-    top: 16%;
-    width: 9%;
+    left: 41%;
+    top: 100%;
+    width: 24.9%; 
     z-index: 10;
     pointer-events: none;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 .ojo-contorno {
+    position: absolute;
     width: 100%;
-    height: 100%;
+    height: auto;
     display: block;
     pointer-events: none;
+    z-index: 1;
 }
 
+.ojo-pupila {
+    position: absolute;
+    width: 60%; 
+    z-index: 2;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s linear;
+}
 
 @media (max-width: 700px) {
     body {
-        /* background-color: #000 !important; */
-        background-size: cover;
+        background-color: #000;
+        background-image: none;
         color: #fff !important;
-        background-position: left;
+        background-position: center;
     }
 
     main {
-        width: 95%;
-        padding: 1.5em 0.5em;
+        width: 100%;
+        margin: 0 auto;
+        padding: 2em 1rem;
     }
 
     h1, h2, h3, p {
@@ -131,13 +200,170 @@ p {
     }
 
     h1 {
-        font-size: 2.5rem;
+        font-size: 3.2rem;
+        letter-spacing: 0.05em;
+        margin-left: 10px;
     }
 
     p {
         font-size: 1rem;
     }
-    .ojo-seguimiento {
+    
+    
+    .ojo-contenedor {
+        display: none;
+    }
+
+    .caras-container {
         display: none;
     }
 }
+
+@media (max-width: 880px) and (max-height: 870px) {
+    p {
+        color: #fff !important;
+    }
+}
+
+@media (min-width: 1000px) and (min-height: 870px) {
+    p {
+        color: #000000 !important;
+    }
+}
+
+.ojo-contenedor {
+    position: absolute;
+    left: 41%;
+    top: 21%;
+    width: 24.9%; 
+    
+    aspect-ratio: 2 / 1; 
+    overflow: hidden;  
+    border-radius: 50%; 
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.parpado {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 0%; 
+    background-color: #000;
+    z-index: 20;
+    transition: height 0.1s ease-in-out;
+    border-radius: 50%;
+    pointer-events: none;
+}
+.parpado.cerrado {
+    height: 100%;
+}
+
+
+/*nubes
+
+/* Contenedor general */
+
+/* --- NUBES --- */
+.nubes-parallax {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.nube {
+    position: absolute;
+    background: #ffffff;
+    border-radius: 100px;
+    filter: blur(2px);
+    opacity: 0.9;
+    will-change: transform;
+    pointer-events: none;
+}
+.nube-frontal {
+    opacity: 0.70; 
+    filter: blur(1px);
+    pointer-events: none;
+}
+
+@keyframes flotar {
+    0%, 100% { margin-top: 0px; }
+    50% { margin-top: 15px; }
+}
+
+.nube::before, .nube::after {
+    content: '';
+    position: absolute;
+    background: inherit;
+    border-radius: 50%;
+}
+
+/* Tipos de nubes más orgánicos */
+.nube.tipo-0 { width: 180px; height: 60px; }
+.nube.tipo-0::before { width: 90px; height: 90px; top: -45px; left: 20px; }
+.nube.tipo-0::after { width: 70px; height: 70px; top: -30px; left: 85px; }
+
+.nube.tipo-1 { width: 120px; height: 45px; }
+.nube.tipo-1::before { width: 65px; height: 65px; top: -35px; left: 15px; }
+.nube.tipo-1::after { width: 50px; height: 50px; top: -20px; left: 55px; }
+
+.nube.tipo-2 { width: 220px; height: 80px; }
+.nube.tipo-2::before { width: 110px; height: 110px; top: -60px; left: 30px; }
+.nube.tipo-2::after { width: 90px; height: 90px; top: -40px; left: 100px; }
+
+@keyframes float {
+  0% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+  33% { transform: translateY(-10px) translateX(5px) rotate(1deg); }
+  66% { transform: translateY(5px) translateX(-5px) rotate(-1deg); }
+  100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
+}
+
+.nube {
+
+  animation: float 6s ease-in-out infinite;
+  animation-delay: var(--delay);
+}
+
+
+.btn {
+  
+  transition: background 0.3s, color 0.3s, transform 0.1s ease-out;
+  will-change: transform;
+}
+
+.nube {
+    will-change: transform;
+    transition: transform 1.2s cubic-bezier(0.075, 0.82, 0.165, 1);
+}
+
+/* Nubes pequeñitas que salen de la boca */
+.nube-susurro {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 50%;
+    filter: blur(0px);
+    pointer-events: none;
+    z-index: 100;
+    animation: susurrar 5s linear forwards;
+}
+
+@keyframes susurrar {
+    0% { transform: translate(0, 0) scale(0); opacity: 0; }
+    10% { opacity: 0.90; }
+    100% { transform: translate(-400px, 100px) scale(1.5); opacity: 0.90; }
+}
+
+/* Transición suave para los botones */
+.social-btn {
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
