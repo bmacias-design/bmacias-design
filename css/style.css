@@ -10,48 +10,27 @@ html {
     font-size: 16px;
 }
 
-@media (min-width: 768px) {
-    html { font-size: 18px; }
-}
-@media (min-width: 1024px) {
-    html { font-size: 20px; }
-}
+@media (min-width: 768px) { html { font-size: 18px; } }
+@media (min-width: 1024px) { html { font-size: 20px; } }
 
 body {
     font-family: "shantell-sans-normal", sans-serif;
-    background-color: #5075c9;
-    color: #000000;
+    
+    /* Color base por si el degradado falla */
+    background-color: #5075c9; 
+    
+    /* El degradado: Inicia en tu azul original arriba (0%) y va a un azul marino oscuro abajo (100%) */
+    background-image: linear-gradient(to bottom, #5075c9 0%, #2b4582 100%);
+    
+    /* Esto es clave para que el degradado cubra toda la pantalla y no se repita feo */
+    background-attachment: fixed; 
     background-repeat: no-repeat;
-    background-position: right top;
-    background-size: contain;
-    background-attachment: fixed;
+    
+    color: #000000;
     margin: 0;
     overflow-x: hidden;
-    background-position: right;
 }
-
-.btn {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #fff;
-    color: #000;
-    text-decoration: none;
-    border-radius: 20px;
-    font-family: "Jetsy", sans-serif;
-    font-weight: bold;
-    margin: 0 5px 10px 0;
-    transition: background 0.3s, color 0.3s, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* El secreto de la fluidez */
-    transform-origin: center;
-    position: relative;
-    z-index: 10;
-    opacity: 0.80;
-}
-
-.btn:hover {
-    background-color: #000;
-    color: #fff;
-}
-
+/* --- BOTONES Y TEXTOS --- */
 main {
     width: 90%;
     max-width: 700px;
@@ -59,28 +38,18 @@ main {
     padding: 2em 1em;
     position: relative;
     z-index: 2;
+    perspective: 1000px; /* NUEVO: Crea el espacio 3D para que el texto gire */
 }
 
+/* --- EFECTO PARALLAX TEXTO (HERO) --- */
+.hero {
+    will-change: transform;
+    transform-style: preserve-3d; /* NUEVO: Permite que los elementos hijos sigan el 3D */
+    /* Le ponemos un tiempo diferente al de las nubes (ej. 1.2s) para que no se muevan al mismo ritmo y se vea natural */
+    transition: transform 1.2s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
 @media (min-width: 1024px) {
-    main {
-        width: 45%;
-        max-width: 660px;
-        margin-left: 8%;
-        margin-right: auto;
-        padding-right: 1.5rem;
-    }
-}
-
-@media (max-width: 1024px) and (min-width: 701px) {
-    .caras-container {
-        width: 38vw;
-        min-width: 280px;
-        max-width: 480px;
-    }
-
-    main {
-        width: 52%;
-    }
+    main { width: 45%; max-width: 660px; margin-left: 8%; }
 }
 
 h1, h2, h3 {
@@ -89,25 +58,71 @@ h1, h2, h3 {
     margin-top: 0;
 }
 
-h1 {
-    font-size: 7rem;      
-    letter-spacing: 0.06rem; 
-    margin-left: 20px;      
-}
+h1 { font-size: 7rem; letter-spacing: 0.06rem; margin-left: 20px; }
 
 p {
-    font-size: 1.2em;
-    line-height: 1.5;
-    margin-bottom: 1.5em;
-    color: #000000;
-    max-width: 65ch;
+    font-size: 1.2em; line-height: 1.5; margin-bottom: 1.5em;
+    color: #000000; max-width: 65ch;
     text-shadow: 0px 0px 0px #4040407d;
 }
-
-* {
-    box-sizing: border-box;
-    scroll-behavior: smooth;
+/* --- EFECTO PARALLAX TEXTO --- */
+.hero {
+    will-change: transform;
+    transition: transform 0.2s cubic-bezier(0.1, 0.8, 0.2, 1);
 }
+/* --- EFECTO MAGNÉTICO EN TEXTOS --- */
+.hero h1, .hero p {
+    will-change: transform;
+    /* Anclamos el crecimiento a la izquierda para mantener la alineación */
+    transform-origin: left center; 
+    /* La misma curva elástica fluida que tienen los botones */
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn {
+    display: inline-flex;         /* Cambio clave para centrar icono y texto */
+    align-items: center;          /* Centra verticalmente */
+    justify-content: center;
+    gap: 8px;                     /* Espacio entre el icono y el texto */
+    padding: 10px 22px;           /* Un poco más de espacio lateral */
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
+    border-radius: 20px;          /* Mantienes la forma de píldora */
+    font-family: "Jetsy", sans-serif;
+    font-weight: bold;
+    margin: 0 5px 10px 0;
+    transition: background 0.3s, color 0.3s, transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: center;
+    position: relative;
+    z-index: 10;
+    opacity: 0.80;
+    will-change: transform;
+}
+
+.btn:hover { background-color: #000; color: #fff; }
+
+/* --- ESTILO PARA LOS ICONOS (Caricaturescos y suaves) --- */
+.social-icon {
+    width: 20px;
+    height: 20px;
+    /* Al usar 'currentColor' en el HTML, esta transición hará que 
+       el icono cambie a blanco mágicamente cuando hagas hover */
+    transition: stroke 0.3s;
+}
+
+/* Efecto cuando la nube toca el botón */
+.btn.susurrado {
+    box-shadow: 0 0 20px 8px rgba(255, 255, 255, 0.8);
+    transform: scale(1.15) !important; 
+    background-color: #fff !important;
+    color: #000 !important;
+    opacity: 1;
+    transition: all 0.15s ease-out;
+}
+
+/* --- ESTRUCTURA GENERAL --- */
+* { box-sizing: border-box; scroll-behavior: smooth; }
 
 .escenario {
     position: relative;
@@ -120,194 +135,88 @@ p {
 
 .caras-container {
     position: fixed;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    width: 42vw;
-    min-width: 320px;
-    max-width: 560px;
+    right: 0; top: 0; bottom: 0;
+    width: 42vw; min-width: 320px; max-width: 560px;
     height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end; 
-    padding: 0;
-    overflow: visible;
-    z-index: 1;
+    display: flex; align-items: center; justify-content: flex-end;
+    z-index: 1; pointer-events: none; /* Para que deje clickear botones si se superpone */
 }
 
-.cara-wrapper {
-    position: relative;
-    display: inline-block;
+    .cara-wrapper {
+    position: relative; 
+    display: inline-block; 
     height: 100%; 
     flex-shrink: 0;
+    
+    /* NUEVO: Preparación para el parallax sutil */
+    will-change: transform;
+    transform-origin: right center; /* Anclamos el centro de la silueta al borde derecho */
+    /* Usamos un tiempo intermedio (0.8s) para que se sienta como una masa pesada moviéndose */
+    transition: transform 0.8s cubic-bezier(0.1, 0.8, 0.2, 1);
 }
 
 .cara-e {
-    height: 100%;
-    width: auto;
-    max-width: none;
-    display: block;
-    margin-right: 0;
+    height: 100%; width: auto; max-width: none; display: block;
 }
 
-
+/* --- EL OJO --- */
 .ojo-contenedor {
     position: absolute;
-    left: 41%;
-    top: 100%;
+    left: 41%; top: 21%;
     width: 24.9%; 
-    z-index: 10;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.ojo-contorno {
-    position: absolute;
-    width: 100%;
-    height: auto;
-    display: block;
-    pointer-events: none;
-    z-index: 1;
-}
-
-.ojo-pupila {
-    position: absolute;
-    width: 60%; 
-    z-index: 2;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    transition: transform 0.05s linear;
-}
-
-@media (max-width: 700px) {
-    body {
-        background-color: #000;
-        background-image: none;
-        color: #fff !important;
-        background-position: center;
-    }
-
-    main {
-        width: 100%;
-        margin: 0 auto;
-        padding: 2em 1rem;
-    }
-
-    h1, h2, h3, p {
-        color: #fff !important;
-    }
-
-    h1 {
-        font-size: 3.2rem;
-        letter-spacing: 0.05em;
-        margin-left: 10px;
-    }
-
-    p {
-        font-size: 1rem;
-    }
-    
-    
-    .ojo-contenedor {
-        display: none;
-    }
-
-    .caras-container {
-        display: none;
-    }
-}
-
-@media (max-width: 880px) and (max-height: 870px) {
-    p {
-        color: #fff !important;
-    }
-}
-
-@media (min-width: 1000px) and (min-height: 870px) {
-    p {
-        color: #000000 !important;
-    }
-}
-
-.ojo-contenedor {
-    position: absolute;
-    left: 41%;
-    top: 21%;
-    width: 24.9%; 
-    
     aspect-ratio: 2 / 1; 
     overflow: hidden;  
     border-radius: 50%; 
     z-index: 10;
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: flex; align-items: center; justify-content: center;
 }
-
+.ojo-contorno {
+    position: absolute; width: 100%; height: auto; display: block; z-index: 1;
+}
+.ojo-pupila {
+    position: absolute; width: 60%; z-index: 2;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s linear;
+}
 .parpado {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 0%; 
-    background-color: #000;
-    z-index: 20;
-    transition: height 0.1s ease-in-out;
-    border-radius: 50%;
-    pointer-events: none;
+    position: absolute; top: 0; left: 0; width: 100%; height: 0%; 
+    background-color: #000; z-index: 20;
+    transition: height 0.1s ease-in-out; border-radius: 50%;
 }
-.parpado.cerrado {
-    height: 100%;
-}
+.parpado.cerrado { height: 100%; }
 
 
-/*nubes
-
-/* Contenedor general */
-
-/* --- NUBES --- */
+/* --- NUBES PARALLAX (El Secreto de las muñecas rusas) --- */
 .nubes-parallax {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0; overflow: hidden;
 }
 
-.nube {
+/* El Wrapper es movido por JS (Mouse) */
+.nube-wrapper {
     position: absolute;
+    will-change: transform;
+    transition: transform 2s cubic-bezier(0.1, 0.8, 0.2, 1);
+}
+
+/* La Nube es movida por CSS (Animación de flotar) */
+.nube {
+    position: relative;
     background: #ffffff;
     border-radius: 100px;
     filter: blur(2px);
     opacity: 0.9;
     will-change: transform;
-    pointer-events: none;
-}
-.nube-frontal {
-    opacity: 0.70; 
-    filter: blur(1px);
-    pointer-events: none;
+    animation: float 6s ease-in-out infinite;
 }
 
-@keyframes flotar {
-    0%, 100% { margin-top: 0px; }
-    50% { margin-top: 15px; }
-}
+.nube-frontal { opacity: 0.70; filter: blur(1px); }
 
 .nube::before, .nube::after {
-    content: '';
-    position: absolute;
-    background: inherit;
-    border-radius: 50%;
+    content: ''; position: absolute; background: inherit; border-radius: 50%;
 }
 
-/* Tipos de nubes más orgánicos */
 .nube.tipo-0 { width: 180px; height: 60px; }
 .nube.tipo-0::before { width: 90px; height: 90px; top: -45px; left: 20px; }
 .nube.tipo-0::after { width: 70px; height: 70px; top: -30px; left: 85px; }
@@ -327,43 +236,25 @@ p {
   100% { transform: translateY(0px) translateX(0px) rotate(0deg); }
 }
 
-.nube {
-
-  animation: float 6s ease-in-out infinite;
-  animation-delay: var(--delay);
-}
-
-
-.btn {
-  
-  transition: background 0.3s, color 0.3s, transform 0.1s ease-out;
-  will-change: transform;
-}
-
-.nube {
-    will-change: transform;
-    transition: transform 1.2s cubic-bezier(0.075, 0.82, 0.165, 1);
-}
-
-/* Nubes pequeñitas que salen de la boca */
+/* --- NUBES DEL SUSURRO --- */
 .nube-susurro {
-    position: absolute;
-    background: rgba(255, 255, 255, 0.8);
-    border-radius: 20%;
-    filter: blur(3px);
+    position: fixed; /* Fixed para que viajen libremente hasta el botón */
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 50%;
+    filter: blur(4px);
     pointer-events: none;
-    z-index: 100;
-    animation: susurrar 5s linear forwards;
+    z-index: 15; 
+    opacity: 0;
+    transform-origin: center;
 }
 
-@keyframes susurrar {
-    0% { transform: translate(0, 0) scale(0); opacity: 0; }
-    10% { opacity: 0.90; }
-    100% { transform: translate(-400px, 120px) scale(1.5); opacity: 0.50; }
+/* RESPONSIVE */
+@media (max-width: 700px) {
+    body { background-color: #000000; color: #000000 !important; }
+    main { width: 100%; padding: 2em 1rem; }
+    h1, h2, h3, p { color: #000000 !important; }
+    h1 { font-size: 3.2rem; margin-left: 10px; }
+    .ojo-contenedor, .caras-container { display: none; }
 }
-
-/* Transición suave para los botones */
-.social-btn {
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
+@media (max-width: 880px) and (max-height: 870px) { p {color: #000000 !important;} }
+@media (min-width: 1000px) and (min-height: 870px) { p { color: #000000 !important; } }
