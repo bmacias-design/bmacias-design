@@ -349,8 +349,8 @@ p {
 .nube-susurro {
     position: absolute;
     background: rgba(255, 255, 255, 0.8);
-    border-radius: 50%;
-    filter: blur(0px);
+    border-radius: 20%;
+    filter: blur(3px);
     pointer-events: none;
     z-index: 100;
     animation: susurrar 5s linear forwards;
@@ -359,7 +359,7 @@ p {
 @keyframes susurrar {
     0% { transform: translate(0, 0) scale(0); opacity: 0; }
     10% { opacity: 0.90; }
-    100% { transform: translate(-400px, 100px) scale(1.5); opacity: 0.90; }
+    100% { transform: translate(-400px, 120px) scale(1.5); opacity: 0.50; }
 }
 
 /* Transición suave para los botones */
